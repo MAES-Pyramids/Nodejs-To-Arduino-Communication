@@ -1,8 +1,3 @@
-/*
- * This file receives a Serial value of "1" or "0" and changes the light based on
- * that value. 
- */  
-
 // Define the port for the LED
 int lightPin = 13;
  
