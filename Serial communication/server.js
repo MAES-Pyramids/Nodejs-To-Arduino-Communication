@@ -11,7 +11,7 @@ const server = http.createServer(app);
 const io = socketIO(server);
 
 const parser = new parsers.Readline({ delimiter: "\r\n" });
-const port = new SerialPort("COM5", {
+const port = new SerialPort("COM3", {
   baudRate: 9600,
   dataBits: 8,
   parity: "none",
@@ -32,6 +32,16 @@ app.get("/", (req, res) => {
 
 function handleSocketConnection(socket) {
   console.log("We have a websocket connection 🔥");
+
+  parser.on("data", (data) => {
+    const [key, value] = data.split(":");
+
+    if (key === "switchState") {
+      console.log(`Switch state from Arduino: ${value}`);
+      io.emit("switchState", { value });
+    }
+  });
+
   socket.on("lights", function (data) {
     console.log(data);
     port.write(data.status);

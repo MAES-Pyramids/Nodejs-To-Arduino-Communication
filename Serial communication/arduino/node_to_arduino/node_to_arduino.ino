@@ -22,7 +22,7 @@ void loop() {
     
     // Loop through received data and append to the receivedString variable
     while (Serial.available() > 0) {
-      receivedString += char(Serial.read ());
+      receivedString = char(Serial.read ());
     }
     
     // Print received Serial data
